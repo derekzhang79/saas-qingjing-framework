@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Service;
 
-import com.lrb.saas.core.message.request.query.QueryRequest;
+import com.lrb.saas.core.message.request.query.SAASQueryRequest;
 import com.lrb.saas.framework.service.MongoService;
 
 @Service("baseMongoServiceImpl")
@@ -87,7 +87,7 @@ public class BaseMongoServiceImpl<T> implements MongoService<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> query(QueryRequest queryRequest) {
+	public List<T> query(SAASQueryRequest queryRequest) {
 		return mongoTemplate.find(queryRequest.toMongoQuery(), queryRequest.getClazz());
 	}
 

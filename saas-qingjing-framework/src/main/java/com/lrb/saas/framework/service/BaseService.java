@@ -3,7 +3,7 @@ package com.lrb.saas.framework.service;
 import java.io.Serializable;
 import java.util.List;
 
-import com.lrb.saas.core.message.request.query.QueryRequest;
+import com.lrb.saas.core.message.request.query.SAASQueryRequest;
 
 public interface BaseService<T> {
 
@@ -21,6 +21,6 @@ public interface BaseService<T> {
 
 	public abstract <K> K getById(Class<K> clazz, Serializable id);
 
-	public abstract List<T> query(QueryRequest queryRequest);
+	public abstract List<T> query(SAASQueryRequest queryRequest);
 
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.lrb.saas.core.annotation.SAASInterface;
 import com.lrb.saas.core.message.request.SAASRequest;
-import com.lrb.saas.core.message.request.query.QueryRequest;
+import com.lrb.saas.core.message.request.query.SAASQueryRequest;
 import com.lrb.saas.core.message.response.InvalidInfo;
 import com.lrb.saas.core.message.response.SAASQueryResponse;
 import com.lrb.saas.core.message.response.SAASResponse;
@@ -72,7 +72,7 @@ public class BaseController<T> {
 			return saasResponse;
 		}
 		T t = (T) baseService.getById(GenericsUtils.getSuperClassGenricType(this.getClass()), id);
-		saasResponse.setResponseBody(t);
+		saasResponse.setBody(t);
 		saasResponse.setMessage("查询成功");
 		saasResponse.setResult(Result.success);
 		return saasResponse;
@@ -81,14 +81,14 @@ public class BaseController<T> {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@SAASInterface(remark = "筛选")
 	// @RequestMapping("query")
-	public SAASQueryResponse<T> query(@RequestBody SAASRequest<QueryRequest> request) throws Exception {
+	public SAASQueryResponse<T> query(@RequestBody SAASRequest<SAASQueryRequest> request) throws Exception {
 		SAASQueryResponse saasQueryResponse = new SAASQueryResponse<>();
-		QueryRequest queryRequest = request.getBody();
+		SAASQueryRequest queryRequest = request.getBody();
 		if (queryRequest == null) {
-			queryRequest = new QueryRequest();
+			queryRequest = new SAASQueryRequest();
 		}
 		queryRequest.setClazz(GenericsUtils.getSuperClassGenricType(this.getClass()));
-		saasQueryResponse.setResponseBody(baseService.query(queryRequest));
+		saasQueryResponse.setBody(baseService.query(queryRequest));
 		saasQueryResponse.setResult(Result.success);
 		saasQueryResponse.setMessage("查询成功");
 		return saasQueryResponse;
@@ -207,7 +207,7 @@ public class BaseController<T> {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public SAASResponse deleteAll(String[] ids) throws Exception {
 		SAASResponse<ArrayList<String>> saasResponse = new SAASResponse<ArrayList<String>>();
-		saasResponse.setResponseBody(new ArrayList<String>());
+		saasResponse.setBody(new ArrayList<String>());
 		Arrays.stream(ids).forEach(id -> {
 			T t = (T) baseService.getById(GenericsUtils.getSuperClassGenricType(this.getClass()), id);
 			// TODO 批量删除没有修改 sys_modifyMemberid和sys_modifyDateTime
@@ -229,7 +229,7 @@ public class BaseController<T> {
 			} else {
 				saasResponse.setMessage("删除失败，有数据删除失败");
 				saasResponse.setResult(Result.fail);
-				saasResponse.getResponseBody().add(id);
+				saasResponse.getBody().add(id);
 			}
 
 		});

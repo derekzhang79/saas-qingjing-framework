@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
-import com.lrb.saas.core.message.request.query.QueryRequest;
+import com.lrb.saas.core.message.request.query.SAASQueryRequest;
 import com.lrb.saas.framework.dao.HibernateDao;
 import com.lrb.saas.framework.service.HibernateService;
 import com.lrb.saas.framework.service.SqlService;
@@ -127,7 +127,7 @@ public class BaseHibernateServiceImpl<T> implements HibernateService<T>, SqlServ
 	}
 
 	@Override
-	public List<T> query(QueryRequest queryRequest) {
+	public List<T> query(SAASQueryRequest queryRequest) {
 		List<T> re = hibernateDaoImpl.findByHql(queryRequest.getSkip(), queryRequest.getLimit(), queryRequest.toHql(), queryRequest.toHqlParams());
 		return re;
 	}

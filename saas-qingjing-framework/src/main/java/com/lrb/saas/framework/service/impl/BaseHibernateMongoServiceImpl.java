@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Service;
 
-import com.lrb.saas.core.message.request.query.QueryRequest;
+import com.lrb.saas.core.message.request.query.SAASQueryRequest;
 import com.lrb.saas.framework.dao.HibernateDao;
 import com.lrb.saas.framework.service.HibernateService;
 import com.lrb.saas.framework.service.MongoService;
@@ -187,7 +187,7 @@ public class BaseHibernateMongoServiceImpl<T> implements MongoService<T>, Hibern
 	}
 
 	@Override
-	public List<T> query(QueryRequest queryRequest) {
+	public List<T> query(SAASQueryRequest queryRequest) {
 		List<T> re = hibernateDaoImpl.findByHql(queryRequest.getSkip(), queryRequest.getLimit(), queryRequest.toHql(), queryRequest.toHqlParams());
 		re.stream().forEach(mongoFindByIdConsumer);
 		return re;
